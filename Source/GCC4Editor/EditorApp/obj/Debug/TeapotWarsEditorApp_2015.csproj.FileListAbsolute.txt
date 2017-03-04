@@ -1,0 +1,9 @@
+W:\rekotc\Downloads\gamecode4-vs2015\Source\Lib\Win32Debug\EditorApp.exe.config
+W:\rekotc\Downloads\gamecode4-vs2015\Source\Lib\Win32Debug\EditorApp.exe
+W:\rekotc\Downloads\gamecode4-vs2015\Source\Lib\Win32Debug\EditorApp.pdb
+W:\rekotc\Downloads\gamecode4-vs2015\Source\GCC4Editor\EditorApp\obj\Debug\TeapotWarsEditorApp_2015.csprojResolveAssemblyReference.cache
+W:\rekotc\Downloads\gamecode4-vs2015\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.EditorForm.resources
+W:\rekotc\Downloads\gamecode4-vs2015\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.Properties.Resources.resources
+W:\rekotc\Downloads\gamecode4-vs2015\Source\GCC4Editor\EditorApp\obj\Debug\TeapotWarsEditorApp_2015.csproj.GenerateResource.Cache
+W:\rekotc\Downloads\gamecode4-vs2015\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.exe
+W:\rekotc\Downloads\gamecode4-vs2015\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.pdb

@@ -97,5 +97,6 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl
   EditorGlobalFunctions.cpp
   Editor.cpp
   Generating Code...
-     Creating library W:\rekotc\Downloads\gamecode4-vs2015\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\GCC4EditorDLL_2015.lib and object W:\rekotc\Downloads\gamecode4-vs2015\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\GCC4EditorDLL_2015.exp
-  GCC4EditorDLL_2015.vcxproj -> W:\rekotc\Downloads\gamecode4-vs2015\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\GCC4EditorDLL_2015.dll
+     Creating library C:\Users\Re Kotc\Source\Repos\game-engine-demo\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\GCC4EditorDLL_2015.lib and object C:\Users\Re Kotc\Source\Repos\game-engine-demo\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\GCC4EditorDLL_2015.exp
+  GCC4EditorDLL_2015.vcxproj -> C:\Users\Re Kotc\Source\Repos\game-engine-demo\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\GCC4EditorDLL_2015.dll
+  GCC4EditorDLL_2015.vcxproj -> C:\Users\Re Kotc\Source\Repos\game-engine-demo\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\GCC4EditorDLL_2015.pdb (Full PDB)

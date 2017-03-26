@@ -449,6 +449,8 @@ TeapotWarsHumanView::TeapotWarsHumanView(shared_ptr<IRenderer> renderer) : Human
 { 
 	m_bShowUI = true; 
     RegisterAllDelegates();
+	//setto camera in prima persona
+	VSetCameraOffset(Vec4(0.0f, 1.0f, 0.0f, 0.0f));
 }
 
 

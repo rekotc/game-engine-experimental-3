@@ -148,7 +148,7 @@ struct ZipFile::TZipDirFileHeader
 // --------------------------------------------------------------------------
 bool ZipFile::Init(const std::wstring &resFileName)
 {
-  End();
+ End();
 
   _wfopen_s(&m_pFile, resFileName.c_str(), _T("rb"));
   if (!m_pFile)
@@ -162,7 +162,7 @@ bool ZipFile::Init(const std::wstring &resFileName)
   memset(&dh, 0, sizeof(dh));
   fread(&dh, sizeof(dh), 1, m_pFile);
 
-  // Check
+ // Check
   if (dh.sig != TZipDirHeader::SIGNATURE)
     return false;
 

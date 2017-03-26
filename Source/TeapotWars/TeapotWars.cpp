@@ -85,7 +85,6 @@ INT WINAPI wWinMain(HINSTANCE hInstance,
 //
 //========================================================================
 
-//git test 1
 
 //
 // TeapotWarsApp::VCreateGameAndView
@@ -97,7 +96,7 @@ BaseGameLogic *TeapotWarsApp::VCreateGameAndView()
 
 	shared_ptr<IGameView> menuView(GCC_NEW MainMenuView());
 	m_pGame->VAddView(menuView);
-	int i = 56;
+	
 	return m_pGame;
 }
 

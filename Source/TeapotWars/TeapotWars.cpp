@@ -118,6 +118,7 @@ void TeapotWarsApp::VRegisterGameEvents(void)
 
 void TeapotWarsApp::VCreateNetworkEventForwarder(void)
 {
+	/*
 	GameCodeApp::VCreateNetworkEventForwarder();
     if (m_pNetworkEventForwarder != NULL)
     {
@@ -132,10 +133,12 @@ void TeapotWarsApp::VCreateNetworkEventForwarder(void)
         pGlobalEventManager->VAddListener(MakeDelegate(m_pNetworkEventForwarder, &NetworkEventForwarder::ForwardEvent), EvtData_EndSteer::sk_EventType);
 
 	}
+	*/
 }
 
 void TeapotWarsApp::VDestroyNetworkEventForwarder(void)
 {
+	/*
 	GameCodeApp::VDestroyNetworkEventForwarder();
     if (m_pNetworkEventForwarder)
     {
@@ -148,6 +151,7 @@ void TeapotWarsApp::VDestroyNetworkEventForwarder(void)
 		pGlobalEventManager->VRemoveListener(MakeDelegate(m_pNetworkEventForwarder, &NetworkEventForwarder::ForwardEvent), EvtData_Environment_Loaded::sk_EventType);
         SAFE_DELETE(m_pNetworkEventForwarder);
     }
+	*/
 }
 
 
@@ -260,11 +264,11 @@ void TeapotWarsLogic::VChangeState(BaseGameState newState)
 			}
 
 			// spawn all remote player's views on the game
-			for (int i = 0; i < m_ExpectedRemotePlayers; ++i)
+			/*for (int i = 0; i < m_ExpectedRemotePlayers; ++i)
 			{
 				shared_ptr<IGameView> remoteGameView(GCC_NEW NetworkGameView);
 				VAddView(remoteGameView);
-			}
+			}*/
 
 			// spawn all AI's views on the game
 			for (int i = 0; i < m_ExpectedAI; ++i)
@@ -298,13 +302,13 @@ void TeapotWarsLogic::VChangeState(BaseGameState newState)
 				}
 				else if (pView->VGetType() == GameView_Remote)
 				{
-					shared_ptr<NetworkGameView> pNetworkGameView = static_pointer_cast<NetworkGameView, IGameView>(pView);
+					/*shared_ptr<NetworkGameView> pNetworkGameView = static_pointer_cast<NetworkGameView, IGameView>(pView);
 					StrongActorPtr pActor = VCreateActor("actors\\remote_teapot.xml", NULL);
 					if (pActor)
 					{
 						shared_ptr<EvtData_New_Actor> pNewActorEvent(GCC_NEW EvtData_New_Actor(pActor->GetId(), pNetworkGameView->VGetId()));
 						IEventManager::Get()->VQueueEvent(pNewActorEvent);
-					}
+					}*/
 				}
 				else if (pView->VGetType() == GameView_AI)
 				{
@@ -393,7 +397,7 @@ void TeapotWarsLogic::RemoteClientDelegate(IEventDataPtr pEventData)
         shared_ptr<IGameView> pView = *it;
         if (pView->VGetType() == GameView_Remote)
         {
-            shared_ptr<NetworkGameView> pNetworkGameView = static_pointer_cast<NetworkGameView, IGameView>(pView);
+            /*shared_ptr<NetworkGameView> pNetworkGameView = static_pointer_cast<NetworkGameView, IGameView>(pView);
 			if (!pNetworkGameView->HasRemotePlayerAttached())
 			{				
 				pNetworkGameView->AttachRemotePlayer(sockID);
@@ -401,7 +405,7 @@ void TeapotWarsLogic::RemoteClientDelegate(IEventDataPtr pEventData)
 				m_HumanPlayersAttached++;
 
 				return;
-			}
+			}*/
         }
     }
 
@@ -545,8 +549,10 @@ void TeapotWarsLogic::RemoveAllDelegates(void)
     pGlobalEventManager->VRemoveListener(MakeDelegate(this, &TeapotWarsLogic::TestScriptDelegate), EvtData_ScriptEventTest_FromLua::sk_EventType);
 }
 
+
 void TeapotWarsLogic::CreateNetworkEventForwarder(const int socketId)
 {
+	/*
     NetworkEventForwarder* pNetworkEventForwarder = GCC_NEW NetworkEventForwarder(socketId);
 
     IEventManager* pGlobalEventManager = IEventManager::Get();
@@ -562,11 +568,12 @@ void TeapotWarsLogic::CreateNetworkEventForwarder(const int socketId)
     pGlobalEventManager->VAddListener(MakeDelegate(pNetworkEventForwarder, &NetworkEventForwarder::ForwardEvent), EvtData_Network_Player_Actor_Assignment::sk_EventType);
 
     m_networkEventForwarders.push_back(pNetworkEventForwarder);
+	*/
 }
 
 void TeapotWarsLogic::DestroyAllNetworkEventForwarders(void)
 {
-    for (auto it = m_networkEventForwarders.begin(); it != m_networkEventForwarders.end(); ++it)
+   /* for (auto it = m_networkEventForwarders.begin(); it != m_networkEventForwarders.end(); ++it)
     {
         NetworkEventForwarder* pNetworkEventForwarder = (*it);
 
@@ -584,6 +591,7 @@ void TeapotWarsLogic::DestroyAllNetworkEventForwarders(void)
     }
 
     m_networkEventForwarders.clear();
+	*/
 }
 
 bool TeapotWarsLogic::VLoadGameDelegate(TiXmlElement* pLevelData)

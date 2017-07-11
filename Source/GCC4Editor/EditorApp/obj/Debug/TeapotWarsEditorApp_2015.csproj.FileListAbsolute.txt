@@ -15,3 +15,21 @@ C:\Users\Re Kotc\Source\Repos\game-engine-demo\Source\GCC4Editor\EditorApp\obj\D
 C:\Users\Re Kotc\Source\Repos\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\TeapotWarsEditorApp_2015.csproj.GenerateResource.Cache
 C:\Users\Re Kotc\Source\Repos\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.exe
 C:\Users\Re Kotc\Source\Repos\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.pdb
+D:\github\visual-studio-2015\game-engine-demo\Source\Lib\Win32Debug\EditorApp.exe.config
+D:\github\visual-studio-2015\game-engine-demo\Source\Lib\Win32Debug\EditorApp.exe
+D:\github\visual-studio-2015\game-engine-demo\Source\Lib\Win32Debug\EditorApp.pdb
+D:\github\visual-studio-2015\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\TeapotWarsEditorApp_2015.csprojResolveAssemblyReference.cache
+D:\github\visual-studio-2015\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.EditorForm.resources
+D:\github\visual-studio-2015\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.Properties.Resources.resources
+D:\github\visual-studio-2015\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\TeapotWarsEditorApp_2015.csproj.GenerateResource.Cache
+D:\github\visual-studio-2015\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.exe
+D:\github\visual-studio-2015\game-engine-demo\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.pdb
+D:\github\visual-studio-2015\game-engine-experimental\Source\Lib\Win32Debug\EditorApp.exe.config
+D:\github\visual-studio-2015\game-engine-experimental\Source\Lib\Win32Debug\EditorApp.exe
+D:\github\visual-studio-2015\game-engine-experimental\Source\Lib\Win32Debug\EditorApp.pdb
+D:\github\visual-studio-2015\game-engine-experimental\Source\GCC4Editor\EditorApp\obj\Debug\TeapotWarsEditorApp_2015.csprojResolveAssemblyReference.cache
+D:\github\visual-studio-2015\game-engine-experimental\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.EditorForm.resources
+D:\github\visual-studio-2015\game-engine-experimental\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.Properties.Resources.resources
+D:\github\visual-studio-2015\game-engine-experimental\Source\GCC4Editor\EditorApp\obj\Debug\TeapotWarsEditorApp_2015.csproj.GenerateResource.Cache
+D:\github\visual-studio-2015\game-engine-experimental\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.exe
+D:\github\visual-studio-2015\game-engine-experimental\Source\GCC4Editor\EditorApp\obj\Debug\EditorApp.pdb

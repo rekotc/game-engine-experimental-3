@@ -45,7 +45,7 @@
 #include "../GameCode4/BaseGameLogic.h"
 #include "../Graphics3D/D3DRenderer.h"
 #include "../EventManager/EventManagerImpl.h"
-#include "../Network/Network.h"
+//#include "../Network/Network.h"
 #include "../LUAScripting/LuaStateManager.h"
 #include "../LUAScripting/ScriptExports.h"
 #include "../LUAScripting/ScriptProcess.h"
@@ -1214,9 +1214,10 @@ void CALLBACK GameCodeApp::OnUpdateGame( double fTime, float fElapsedTime, void*
 	{
         IEventManager::Get()->VUpdate(20); // allow event queue to process for up to 20 ms
 
+		/*
 		if (g_pApp->m_pBaseSocketManager)
 			g_pApp->m_pBaseSocketManager->DoSelect(0);	// pause 0 microseconds
-
+			*/
 		g_pApp->m_pGame->VOnUpdate(float(fTime), fElapsedTime);
 	}
 }
@@ -1276,6 +1277,7 @@ void CALLBACK GameCodeApp::OnD3D9DestroyDevice( void* pUserContext )
 
 bool GameCodeApp::AttachAsClient()
 {
+/*
 	ClientSocketManager *pClient = GCC_NEW ClientSocketManager(g_pApp->m_Options.m_gameHost, g_pApp->m_Options.m_listenPort);
 	if (!pClient->Connect())
 	{
@@ -1285,12 +1287,16 @@ bool GameCodeApp::AttachAsClient()
 	VCreateNetworkEventForwarder();
 
 	return true;
+	*/
+	return true;
 }
+
 
 
 // Any events that will be received from the server logic should be here!
 void GameCodeApp::VCreateNetworkEventForwarder(void)
 {
+	/*
     if (m_pNetworkEventForwarder != NULL)
     {
         GCC_ERROR("Overwriting network event forwarder in TeapotWarsApp!");
@@ -1303,11 +1309,13 @@ void GameCodeApp::VCreateNetworkEventForwarder(void)
 	pGlobalEventManager->VAddListener(MakeDelegate(m_pNetworkEventForwarder, &NetworkEventForwarder::ForwardEvent), EvtData_Request_New_Actor::sk_EventType);
 	pGlobalEventManager->VAddListener(MakeDelegate(m_pNetworkEventForwarder, &NetworkEventForwarder::ForwardEvent), EvtData_Environment_Loaded::sk_EventType);
 	pGlobalEventManager->VAddListener(MakeDelegate(m_pNetworkEventForwarder, &NetworkEventForwarder::ForwardEvent), EvtData_PhysCollision::sk_EventType);
-
+	*/
 }
+
 
 void GameCodeApp::VDestroyNetworkEventForwarder(void)
 {
+	/*
     if (m_pNetworkEventForwarder)
     {
         IEventManager* pGlobalEventManager = IEventManager::Get();
@@ -1316,6 +1324,7 @@ void GameCodeApp::VDestroyNetworkEventForwarder(void)
 		pGlobalEventManager->VRemoveListener(MakeDelegate(m_pNetworkEventForwarder, &NetworkEventForwarder::ForwardEvent), EvtData_PhysCollision::sk_EventType);
         SAFE_DELETE(m_pNetworkEventForwarder);
     }
+	*/
 }
 
 

@@ -98,5 +98,5 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl
   TeapotEvents.cpp
   TeapotController.cpp
   Generazione del codice in corso...
-  TeapotWars_2015.vcxproj -> D:\github\visual-studio-2015\game-engine-experimental\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\TeapotWars_2015Win32Debug.exe
-  TeapotWars_2015.vcxproj -> D:\github\visual-studio-2015\game-engine-experimental\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\TeapotWars_2015Win32Debug.pdb (Full PDB)
+  TeapotWars_2015.vcxproj -> D:\workspace\portatile-win\visual-studio-2015\game-engine-experimental\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\TeapotWars_2015Win32Debug.exe
+  TeapotWars_2015.vcxproj -> D:\workspace\portatile-win\visual-studio-2015\game-engine-experimental\Source\TeapotWars\Msvc\..\..\Lib\Win32Debug\TeapotWars_2015Win32Debug.pdb (Full PDB)

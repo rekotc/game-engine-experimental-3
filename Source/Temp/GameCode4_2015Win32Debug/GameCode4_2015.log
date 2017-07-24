@@ -104,9 +104,9 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamathmisc.inl
   ResCache.cpp
   PhysicsEventListener.cpp
   PhysicsDebugDrawer.cpp
-d:\github\visual-studio-2015\game-engine-experimental\source\gcc4\3rdparty\bullet-2.79\src\bulletdynamics\constraintsolver\btcontactconstraint.h(25): warning C4359: 'btContactConstraint': l'identificatore di allineamento è inferiore all'allineamento effettivo (128) e verrà ignorato.
+d:\workspace\portatile-win\visual-studio-2015\game-engine-experimental\source\gcc4\3rdparty\bullet-2.79\src\bulletdynamics\constraintsolver\btcontactconstraint.h(25): warning C4359: 'btContactConstraint': l'identificatore di allineamento è inferiore all'allineamento effettivo (128) e verrà ignorato.
   Physics.cpp
-d:\github\visual-studio-2015\game-engine-experimental\source\gcc4\3rdparty\bullet-2.79\src\bulletdynamics\constraintsolver\btcontactconstraint.h(25): warning C4359: 'btContactConstraint': l'identificatore di allineamento è inferiore all'allineamento effettivo (128) e verrà ignorato.
+d:\workspace\portatile-win\visual-studio-2015\game-engine-experimental\source\gcc4\3rdparty\bullet-2.79\src\bulletdynamics\constraintsolver\btcontactconstraint.h(25): warning C4359: 'btContactConstraint': l'identificatore di allineamento è inferiore all'allineamento effettivo (128) e verrà ignorato.
   Network.cpp
   RealtimeProcess.cpp
   MemoryPool.cpp
@@ -137,8 +137,8 @@ c:\program files (x86)\windows kits\8.1\include\um\dbghelp.h(3190): warning C409
   GameCode.cpp
 c:\program files (x86)\windows kits\8.1\include\um\dbghelp.h(1544): warning C4091: 'typedef ': ignorato a sinistra di '' quando non si dichiara alcuna variabile
 c:\program files (x86)\windows kits\8.1\include\um\dbghelp.h(3190): warning C4091: 'typedef ': ignorato a sinistra di '' quando non si dichiara alcuna variabile
-d:\github\visual-studio-2015\game-engine-experimental\source\gcc4\gamecode4\gamecode.cpp(692): warning C4150: eliminazione del puntatore al tipo incompleto 'BaseSocketManager'. Non è stato chiamato nessun distruttore
-  d:\github\visual-studio-2015\game-engine-experimental\source\gcc4\gamecode4\gamecode.h(49): note: vedere la dichiarazione di 'BaseSocketManager'
+d:\workspace\portatile-win\visual-studio-2015\game-engine-experimental\source\gcc4\gamecode4\gamecode.cpp(692): warning C4150: eliminazione del puntatore al tipo incompleto 'BaseSocketManager'. Non è stato chiamato nessun distruttore
+  d:\workspace\portatile-win\visual-studio-2015\game-engine-experimental\source\gcc4\gamecode4\gamecode.h(49): note: vedere la dichiarazione di 'BaseSocketManager'
   BaseGameLogic.cpp
   Events.cpp
   EventManagerImpl.cpp
@@ -165,4 +165,4 @@ c:\program files (x86)\windows kits\8.1\include\um\dbghelp.h(3190): warning C409
   ActorFactory.cpp
   Actor.cpp
   Generazione del codice in corso...
-  GameCode4_2015.vcxproj -> D:\github\visual-studio-2015\game-engine-experimental\Source\GCC4\Msvc\..\..\Lib\Win32Debug\GameCode4_2015.lib
+  GameCode4_2015.vcxproj -> D:\workspace\portatile-win\visual-studio-2015\game-engine-experimental\Source\GCC4\Msvc\..\..\Lib\Win32Debug\GameCode4_2015.lib

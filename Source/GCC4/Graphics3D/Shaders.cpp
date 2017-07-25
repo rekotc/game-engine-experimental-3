@@ -43,7 +43,8 @@
 #include "D3DRenderer.h"
 #include "Geometry.h"
 #include "Lights.h"
-#include "Mesh.h"
+//#include "Mesh.h"
+#include "MeshAssimp.h"
 #include "SceneNodes.h"
 #include "../ResourceCache/ResCache.h"
 

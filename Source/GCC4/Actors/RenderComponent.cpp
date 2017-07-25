@@ -40,7 +40,8 @@
 
 #include "GameCodeStd.h"
 
-#include "..\Graphics3D\Mesh.h"
+//#include "..\Graphics3D\Mesh.h"
+#include "..\Graphics3D\MeshAssimp.h"
 #include "..\Graphics3D\Sky.h"
 
 #include "../Utilities/String.h"

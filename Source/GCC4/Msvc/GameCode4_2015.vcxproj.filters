@@ -152,9 +152,6 @@
     <ClInclude Include="..\Graphics3D\Lights.h">
       <Filter>Graphics3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\Graphics3D\Mesh.h">
-      <Filter>Graphics3D</Filter>
-    </ClInclude>
     <ClInclude Include="..\Graphics3D\Shaders.h">
       <Filter>Graphics3D</Filter>
     </ClInclude>
@@ -199,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="..\Utilities\types.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics3D\MeshAssimp.h">
+      <Filter>Graphics3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,9 +338,6 @@
     <ClCompile Include="..\Graphics3D\Lights.cpp">
       <Filter>Graphics3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\Graphics3D\Mesh.cpp">
-      <Filter>Graphics3D</Filter>
-    </ClCompile>
     <ClCompile Include="..\Graphics3D\Shaders.cpp">
       <Filter>Graphics3D</Filter>
     </ClCompile>
@@ -373,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="..\Actors\AudioComponent.cpp">
       <Filter>Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics3D\MeshAssimp.cpp">
+      <Filter>Graphics3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

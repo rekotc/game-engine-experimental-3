@@ -73,7 +73,7 @@
     <IntDir>$(SolutionDir)..\..\Temp\$(ProjectName)$(PlatformName)$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>$(ProjectDir);$(ProjectDir)..\3rdParty\DXUT11\Optional;$(ProjectDir)..\3rdParty\DXUT11\Effects11\Inc;$(ProjectDir)..\3rdParty\DXUT11\Core;$(ProjectDir)..\3rdParty\libogg-1.3.0\include;$(ProjectDir)..\3rdParty\libvorbis-1.3.2\include;$(ProjectDir)..\3rdParty\bullet-2.79\src;$(ProjectDir)..\3rdParty\zlib-1.2.5;$(ProjectDir)..\3rdParty\tinyxml_2_6_2;$(ProjectDir)..\3rdParty\luaplus51-all\Src\LuaPlus;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)..\3rdParty\DXUT11\Optional;$(ProjectDir)..\3rdParty\DXUT11\Effects11\Inc;$(ProjectDir)..\3rdParty\DXUT11\Core;$(ProjectDir)..\3rdParty\libogg-1.3.0\include;$(ProjectDir)..\3rdParty\libvorbis-1.3.2\include;$(ProjectDir)..\3rdParty\bullet-2.79\src;$(ProjectDir)..\3rdParty\zlib-1.2.5;$(ProjectDir)..\3rdParty\tinyxml_2_6_2;$(ProjectDir)..\3rdParty\luaplus51-all\Src\LuaPlus;$(DXSDK_DIR)\Include;$(IncludePath);C:\Program Files\Assimp\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -109,6 +109,7 @@
       <PrecompiledHeaderFile>GameCodeStd.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <AdditionalIncludeDirectories>C:\development-tools\Assimp\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

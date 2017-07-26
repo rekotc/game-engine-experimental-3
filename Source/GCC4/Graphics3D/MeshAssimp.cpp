@@ -491,3 +491,127 @@ float D3DShaderMeshNode11::CalcBoundingSphere(CDXUTSDKMesh *mesh11)
 	}
 	return radius;
 }
+
+//ASSIMP SHADER MESH CUSTOM
+
+//
+//
+D3DShaderAssimpMeshNode11::D3DShaderAssimpMeshNode11(const ActorId actorId,
+	WeakBaseRenderComponentPtr renderComponent,
+	std::string sdkMeshFileName,
+	RenderPass renderPass,
+	const Mat4x4 *t)
+	: SceneNode(actorId, renderComponent, renderPass, t)
+{
+	m_sdkMeshFileName = sdkMeshFileName;
+	m_assimpMeshFileName = sdkMeshFileName;
+
+}
+
+
+//
+// D3DShaderMeshNode11::VOnRestore							- Chapter 16, page 563
+//
+HRESULT D3DShaderAssimpMeshNode11::VOnRestore(Scene *pScene)
+{
+	HRESULT hr;
+
+	V_RETURN(SceneNode::VOnRestore(pScene));
+
+	V_RETURN(m_VertexShader.OnRestore(pScene));
+	V_RETURN(m_PixelShader.OnRestore(pScene));
+
+	// Force the Mesh to reload
+	Resource resource(m_sdkMeshFileName);
+	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
+	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+
+	SetRadius(CalcBoundingSphere(&extra->m_Mesh11));
+
+	return S_OK;
+}
+
+//
+// D3DShaderMeshNode11::VRender								- Chapter 16, page 564
+//
+HRESULT D3DShaderAssimpMeshNode11::VRender(Scene *pScene)
+{
+	HRESULT hr;
+
+	ID3D11DeviceContext* deviceContext = DXUTGetD3D11DeviceContext();
+
+	V_RETURN(m_VertexShader.SetupRender(pScene, this));
+	V_RETURN(m_PixelShader.SetupRender(pScene, this));
+
+	//Get the Mesh
+	Resource resource(m_sdkMeshFileName);
+	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
+	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+
+	// FUTURE WORK - this code WON'T be able to find texture resources referred to by the sdkmesh file 
+	// in the Resource cache.
+
+	//IA setup
+	UINT Strides[1];
+	UINT Offsets[1];
+	ID3D11Buffer* pVB[1];
+	pVB[0] = extra->m_Mesh11.GetVB11(0, 0);
+	Strides[0] = (UINT)extra->m_Mesh11.GetVertexStride(0, 0);
+	Offsets[0] = 0;
+	deviceContext->IASetVertexBuffers(0, 1, pVB, Strides, Offsets);
+	deviceContext->IASetIndexBuffer(extra->m_Mesh11.GetIB11(0), extra->m_Mesh11.GetIBFormat11(0), 0);
+
+	//Render
+	D3D11_PRIMITIVE_TOPOLOGY PrimType;
+	for (UINT subset = 0; subset < extra->m_Mesh11.GetNumSubsets(0); ++subset)
+	{
+		// Get the subset
+		SDKMESH_SUBSET *pSubset = extra->m_Mesh11.GetSubset(0, subset);
+
+		PrimType = CDXUTSDKMesh::GetPrimitiveType11((SDKMESH_PRIMITIVE_TYPE)pSubset->PrimitiveType);
+		deviceContext->IASetPrimitiveTopology(PrimType);
+
+		ID3D11ShaderResourceView* pDiffuseRV = extra->m_Mesh11.GetMaterial(pSubset->MaterialID)->pDiffuseRV11;
+		deviceContext->PSSetShaderResources(0, 1, &pDiffuseRV);
+
+		deviceContext->DrawIndexed((UINT)pSubset->IndexCount, 0, (UINT)pSubset->VertexStart);
+	}
+	return S_OK;
+}
+
+HRESULT D3DShaderAssimpMeshNode11::VPick(Scene *pScene, RayCast *pRayCast)
+{
+	if (SceneNode::VPick(pScene, pRayCast) == E_FAIL)
+		return E_FAIL;
+
+	pScene->PushAndSetMatrix(m_Props.ToWorld());
+
+	//Get the Mesh
+	Resource resource(m_sdkMeshFileName);
+	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
+	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+
+	HRESULT hr = pRayCast->Pick(pScene, m_Props.ActorId(), &extra->m_Mesh11);
+	pScene->PopMatrix();
+
+	return hr;
+}
+
+
+
+
+float D3DShaderAssimpMeshNode11::CalcBoundingSphere(CDXUTSDKMesh *mesh11)
+{
+	float radius = 0.0f;
+	for (UINT subset = 0; subset < mesh11->GetNumSubsets(0); ++subset)
+	{
+		Vec3 extents = mesh11->GetMeshBBoxExtents(subset);
+		extents.x = abs(extents.x);
+		extents.y = abs(extents.y);
+		extents.z = abs(extents.z);
+		radius = (radius > extents.x) ? radius : extents.x;
+		radius = (radius > extents.y) ? radius : extents.y;
+		radius = (radius > extents.z) ? radius : extents.z;
+	}
+	return radius;
+}

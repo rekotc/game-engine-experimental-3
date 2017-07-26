@@ -5,6 +5,13 @@
 #include "Geometry.h"
 #include "../ResourceCache/ResCache.h"
 
+#include <assimp/Importer.hpp>
+
+/* assimp include files. These three are usually needed. */
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 
 //
 // class D3DSdkMeshResourceExtraData11					- Chapter 16, page 561
@@ -158,5 +165,37 @@ public:
 	bool VIsVisible() { return true; }
 };
 
+class D3DShaderAssimpMeshNode11 : public SceneNode
+{
+public:
+	D3DShaderAssimpMeshNode11(const ActorId actorId,
+		WeakBaseRenderComponentPtr renderComponent,
+		std::string sdkMeshFileName,
+		RenderPass renderPass,
+		const Mat4x4 *t);
+
+	virtual HRESULT VOnRestore(Scene *pScene);
+	virtual HRESULT VOnLostDevice(Scene *pScene) { return S_OK; }
+	virtual HRESULT VRender(Scene *pScene);
+	virtual HRESULT VPick(Scene *pScene, RayCast *pRayCast);
+
+protected:
+	std::string					m_sdkMeshFileName;
+
+	std::string					m_assimpMeshFileName;
+
+	GameCode4_Hlsl_VertexShader		m_VertexShader;
+	GameCode4_Hlsl_PixelShader		m_PixelShader;
+
+	float CalcBoundingSphere(CDXUTSDKMesh *mesh11);			// this was added post press.
+};
+
+class D3DAssimpTeapotMeshNode11 : public D3DShaderAssimpMeshNode11
+{
+public:
+	D3DAssimpTeapotMeshNode11(const ActorId actorId, WeakBaseRenderComponentPtr renderComponent, RenderPass renderPass, const Mat4x4 *t)
+		: D3DShaderAssimpMeshNode11(actorId, renderComponent, "art\\teapot.sdkmesh", renderPass, t) { }
+	bool VIsVisible() { return true; }
+};
 
 

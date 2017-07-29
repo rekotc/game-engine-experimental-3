@@ -203,7 +203,7 @@ shared_ptr<SceneNode> TeapotRenderComponent::VCreateSceneNode(void)
 				Mat4x4 rot90;
 				rot90.BuildRotationY(-GCC_PI/2.0f);
 				shared_ptr<SceneNode> parent(GCC_NEW SceneNode(m_pOwner->GetId(), weakThis, RenderPass_Actor, &pTransformComponent->GetTransform()));
-				shared_ptr<SceneNode> teapot(GCC_NEW D3DTeapotMeshNode11(INVALID_ACTOR_ID, weakThis, RenderPass_Actor, &rot90));
+				shared_ptr<SceneNode> teapot(GCC_NEW D3DAssimpTeapotMeshNode11(INVALID_ACTOR_ID, weakThis, RenderPass_Actor, &rot90));
 				parent->VAddChild(teapot);
 				return parent;
 			}

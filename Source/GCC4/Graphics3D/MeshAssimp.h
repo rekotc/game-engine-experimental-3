@@ -43,6 +43,32 @@ public:
 
 
 
+//ASSIMP aggiunte
+//
+class D3DAssimpMeshResourceExtraData11 : public IResourceExtraData
+{
+	friend class SdkMeshResourceLoader;
+
+public:
+	D3DAssimpMeshResourceExtraData11() { };
+	virtual ~D3DAssimpMeshResourceExtraData11() { }
+	virtual std::string VToString() { return "D3DAssimpMeshResourceExtraData11"; }
+
+	CDXUTSDKMesh                m_Mesh11;
+};
+
+class AssimpMeshResourceLoader : public IResourceLoader
+{
+public:
+	virtual bool VUseRawFile() { return false; }
+	virtual bool VDiscardRawBufferAfterLoad() { return false; }
+	virtual unsigned int VGetLoadedResourceSize(char *rawBuffer, unsigned int rawSize);
+	virtual bool VLoadResource(char *rawBuffer, unsigned int rawSize, shared_ptr<ResHandle> handle);
+	virtual std::string VGetPattern() { return "*.obj"; }
+};
+
+//END ASSIMP
+
 
 ////////////////////////////////////////////////////
 //
@@ -161,7 +187,9 @@ class D3DTeapotMeshNode11 : public D3DShaderMeshNode11
 {
 public:
 	D3DTeapotMeshNode11(const ActorId actorId, WeakBaseRenderComponentPtr renderComponent, RenderPass renderPass, const Mat4x4 *t)
+		//: D3DShaderMeshNode11(actorId, renderComponent, "art\\teapot.sdkmesh", renderPass, t) { }
 		: D3DShaderMeshNode11(actorId, renderComponent, "art\\teapot.sdkmesh", renderPass, t) { }
+
 	bool VIsVisible() { return true; }
 };
 
@@ -194,7 +222,7 @@ class D3DAssimpTeapotMeshNode11 : public D3DShaderAssimpMeshNode11
 {
 public:
 	D3DAssimpTeapotMeshNode11(const ActorId actorId, WeakBaseRenderComponentPtr renderComponent, RenderPass renderPass, const Mat4x4 *t)
-		: D3DShaderAssimpMeshNode11(actorId, renderComponent, "art\\teapot.sdkmesh", renderPass, t) { }
+		: D3DShaderAssimpMeshNode11(actorId, renderComponent, "art\\untitled.obj", renderPass, t) { }
 	bool VIsVisible() { return true; }
 };
 

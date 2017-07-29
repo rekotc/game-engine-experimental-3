@@ -52,6 +52,45 @@ bool SdkMeshResourceLoader::VLoadResource(char *rawBuffer, unsigned int rawSize,
 	return false;
 }
 
+//ASSIMP RESOURCE LOADER 
+shared_ptr<IResourceLoader> CreateAssimpMeshResourceLoader()
+{
+	return shared_ptr<IResourceLoader>(GCC_NEW AssimpMeshResourceLoader());
+}
+
+unsigned int AssimpMeshResourceLoader::VGetLoadedResourceSize(char *rawBuffer, unsigned int rawSize)
+{
+	// The raw data of the SDK Mesh file is needed by the CDXUTMesh class, so we're going to keep it around.
+	return rawSize;
+}
+
+//
+// SdkMeshResourceLoader::VLoadResource						- Chapter 16, page 561
+//
+bool AssimpMeshResourceLoader::VLoadResource(char *rawBuffer, unsigned int rawSize, shared_ptr<ResHandle> handle)
+{
+	GameCodeApp::Renderer renderer = GameCodeApp::GetRendererImpl();
+	if (renderer == GameCodeApp::Renderer_D3D9)
+	{
+		GCC_ASSERT(0 && "This is not supported in D3D9");
+	}
+	else if (renderer == GameCodeApp::Renderer_D3D11)
+	{
+		shared_ptr<D3DAssimpMeshResourceExtraData11> extra = shared_ptr<D3DAssimpMeshResourceExtraData11>(GCC_NEW D3DAssimpMeshResourceExtraData11());
+
+		// Load the Mesh
+		if (SUCCEEDED(extra->m_Mesh11.Create(DXUTGetD3D11Device(), (BYTE *)rawBuffer, (UINT)rawSize, true)))
+		{
+			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
+		}
+
+		return true;
+	}
+
+	GCC_ASSERT(0 && "Unsupported Renderer in AssimpMeshResourceLoader::VLoadResource");
+	return false;
+}
+
 
 
 
@@ -524,7 +563,7 @@ HRESULT D3DShaderAssimpMeshNode11::VOnRestore(Scene *pScene)
 	// Force the Mesh to reload
 	Resource resource(m_sdkMeshFileName);
 	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
-	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+	shared_ptr<D3DAssimpMeshResourceExtraData11> extra = static_pointer_cast<D3DAssimpMeshResourceExtraData11>(pResourceHandle->GetExtra());
 
 	SetRadius(CalcBoundingSphere(&extra->m_Mesh11));
 
@@ -546,7 +585,7 @@ HRESULT D3DShaderAssimpMeshNode11::VRender(Scene *pScene)
 	//Get the Mesh
 	Resource resource(m_sdkMeshFileName);
 	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
-	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+	shared_ptr<D3DAssimpMeshResourceExtraData11> extra = static_pointer_cast<D3DAssimpMeshResourceExtraData11>(pResourceHandle->GetExtra());
 
 	// FUTURE WORK - this code WON'T be able to find texture resources referred to by the sdkmesh file 
 	// in the Resource cache.
@@ -589,7 +628,7 @@ HRESULT D3DShaderAssimpMeshNode11::VPick(Scene *pScene, RayCast *pRayCast)
 	//Get the Mesh
 	Resource resource(m_sdkMeshFileName);
 	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
-	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+	shared_ptr<D3DAssimpMeshResourceExtraData11> extra = static_pointer_cast<D3DAssimpMeshResourceExtraData11>(pResourceHandle->GetExtra());
 
 	HRESULT hr = pRayCast->Pick(pScene, m_Props.ActorId(), &extra->m_Mesh11);
 	pScene->PopMatrix();

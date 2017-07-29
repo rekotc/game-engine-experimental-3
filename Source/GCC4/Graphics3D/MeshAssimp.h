@@ -4,6 +4,7 @@
 #include <SDKMesh.h>
 #include "Geometry.h"
 #include "../ResourceCache/ResCache.h"
+#include "ModelType.h"
 
 #include <assimp/Importer.hpp>
 
@@ -26,6 +27,9 @@ public:
 	virtual std::string VToString() { return "D3DSdkMeshResourceExtraData11"; }
 
 	CDXUTSDKMesh                m_Mesh11;
+
+
+
 };
 
 //
@@ -50,11 +54,12 @@ class D3DAssimpMeshResourceExtraData11 : public IResourceExtraData
 	friend class SdkMeshResourceLoader;
 
 public:
-	D3DAssimpMeshResourceExtraData11() { };
+	D3DAssimpMeshResourceExtraData11() { m_assimpMesh11 = 0; };
 	virtual ~D3DAssimpMeshResourceExtraData11() { }
 	virtual std::string VToString() { return "D3DAssimpMeshResourceExtraData11"; }
 
 	CDXUTSDKMesh                m_Mesh11;
+	ModelType* m_assimpMesh11;
 };
 
 class AssimpMeshResourceLoader : public IResourceLoader
@@ -65,6 +70,10 @@ public:
 	virtual unsigned int VGetLoadedResourceSize(char *rawBuffer, unsigned int rawSize);
 	virtual bool VLoadResource(char *rawBuffer, unsigned int rawSize, shared_ptr<ResHandle> handle);
 	virtual std::string VGetPattern() { return "*.obj"; }
+
+	bool LoadModelUsingAssimp(const std::string& Filename, ModelType* outModel);
+
+	int m_NumIndicesAssimp, m_NumFacesAssimp, m_NumVerteciesAssimp;
 };
 
 //END ASSIMP
@@ -216,6 +225,7 @@ protected:
 	GameCode4_Hlsl_PixelShader		m_PixelShader;
 
 	float CalcBoundingSphere(CDXUTSDKMesh *mesh11);			// this was added post press.
+	
 };
 
 class D3DAssimpTeapotMeshNode11 : public D3DShaderAssimpMeshNode11

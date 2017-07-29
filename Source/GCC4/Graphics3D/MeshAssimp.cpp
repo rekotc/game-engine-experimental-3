@@ -79,10 +79,20 @@ bool AssimpMeshResourceLoader::VLoadResource(char *rawBuffer, unsigned int rawSi
 		shared_ptr<D3DAssimpMeshResourceExtraData11> extra = shared_ptr<D3DAssimpMeshResourceExtraData11>(GCC_NEW D3DAssimpMeshResourceExtraData11());
 
 		// Load the Mesh
-		if (SUCCEEDED(extra->m_Mesh11.Create(DXUTGetD3D11Device(), (BYTE *)rawBuffer, (UINT)rawSize, true)))
+	/*	if (SUCCEEDED(extra->m_Mesh11.Create(DXUTGetD3D11Device(), (BYTE *)rawBuffer, (UINT)rawSize, true)))
 		{
 			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
+		}*/
+
+		if (LoadModelUsingAssimp(handle->GetName(), extra->m_assimpMesh11)) {
+			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
 		}
+		else
+			GCC_ASSERT(0 && "Errore nel caricamento della mesh!");
+
+		//extra->m_assimpMesh11 
+
+		
 
 		return true;
 	}
@@ -653,4 +663,69 @@ float D3DShaderAssimpMeshNode11::CalcBoundingSphere(CDXUTSDKMesh *mesh11)
 		radius = (radius > extents.z) ? radius : extents.z;
 	}
 	return radius;
+}
+
+
+bool AssimpMeshResourceLoader::LoadModelUsingAssimp(const std::string& filename, ModelType* outModel)
+{
+
+	std::string Filename = filename;
+	Filename = "M:\\github\\visual-studio-2015\\game-engine-experimental-3\\Assets\\Art\\untitled.obj";
+	Assimp::Importer Importer;
+	const aiScene *pScene = NULL;
+	const aiMesh *pMesh = NULL;
+
+	pScene = Importer.ReadFile(Filename.c_str(), aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_ValidateDataStructure | aiProcess_FindInvalidData);
+
+	if (!pScene)
+	{
+		printf("Error parsing '%s': '%s'\n", Filename.c_str(), Importer.GetErrorString());
+		return false;
+	}
+
+	pMesh = pScene->mMeshes[0];
+	if (!pMesh)
+	{
+		printf("Error Finding Model In file.  Did you export an empty scene?");
+		return false;
+	}
+
+	for (unsigned int i = 0; i < pMesh->mNumFaces; i++)
+	{
+		if (pMesh->mFaces[i].mNumIndices == 3)
+		{
+			m_NumIndicesAssimp = m_NumIndicesAssimp + 3;
+		}
+
+		else
+		{
+			printf("Error parsing Faces. Try to Re-Export model from 3d package!");
+			return false;
+		}
+	}
+
+	m_NumFacesAssimp = pMesh->mNumFaces;
+	m_NumVerteciesAssimp = pMesh->mNumVertices;
+
+	// Create the model using the vertex count that was read in.
+	outModel = new ModelType[m_NumVerteciesAssimp];
+
+	if (!outModel)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < pMesh->mNumVertices; i++)
+	{
+		outModel[i].x = pMesh->mVertices[i].x;
+		outModel[i].y = pMesh->mVertices[i].y;
+		outModel[i].z = pMesh->mVertices[i].z;
+		outModel[i].tu = pMesh->mTextureCoords[0][i].x;
+		outModel[i].tv = pMesh->mTextureCoords[0][i].y;
+		outModel[i].nx = pMesh->mNormals[i].x;
+		outModel[i].ny = pMesh->mNormals[i].y;
+		outModel[i].nz = pMesh->mNormals[i].z;
+	}
+
+	return true;
 }

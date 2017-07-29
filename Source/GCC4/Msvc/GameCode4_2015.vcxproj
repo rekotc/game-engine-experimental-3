@@ -237,6 +237,7 @@
     <ClInclude Include="..\Graphics3D\Lights.h" />
     <ClInclude Include="..\Graphics3D\Material.h" />
     <ClInclude Include="..\Graphics3D\MeshAssimp.h" />
+    <ClInclude Include="..\Graphics3D\ModelType.h" />
     <ClInclude Include="..\Graphics3D\MovementController.h" />
     <ClInclude Include="..\Graphics3D\Raycast.h" />
     <ClInclude Include="..\Graphics3D\Scene.h" />
@@ -302,6 +303,7 @@
     <ClCompile Include="..\Graphics3D\Lights.cpp" />
     <ClCompile Include="..\Graphics3D\Material.cpp" />
     <ClCompile Include="..\Graphics3D\MeshAssimp.cpp" />
+    <ClCompile Include="..\Graphics3D\ModelType.cpp" />
     <ClCompile Include="..\Graphics3D\MovementController.cpp" />
     <ClCompile Include="..\Graphics3D\Raycast.cpp" />
     <ClCompile Include="..\Graphics3D\Scene.cpp" />

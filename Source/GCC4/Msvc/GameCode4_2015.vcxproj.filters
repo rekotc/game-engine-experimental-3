@@ -200,6 +200,9 @@
     <ClInclude Include="..\Graphics3D\MeshAssimp.h">
       <Filter>Graphics3D</Filter>
     </ClInclude>
+    <ClInclude Include="..\Graphics3D\ModelType.h">
+      <Filter>Graphics3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCodeStd.cpp" />
@@ -372,6 +375,9 @@
       <Filter>Actors</Filter>
     </ClCompile>
     <ClCompile Include="..\Graphics3D\MeshAssimp.cpp">
+      <Filter>Graphics3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics3D\ModelType.cpp">
       <Filter>Graphics3D</Filter>
     </ClCompile>
   </ItemGroup>

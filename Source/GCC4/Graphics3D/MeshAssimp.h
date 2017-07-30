@@ -59,7 +59,7 @@ public:
 	virtual std::string VToString() { return "D3DAssimpMeshResourceExtraData11"; }
 
 	CDXUTSDKMesh                m_Mesh11;
-	ModelType* m_assimpMesh11;
+	shared_ptr<ModelType> m_assimpMesh11;
 };
 
 class AssimpMeshResourceLoader : public IResourceLoader
@@ -71,7 +71,7 @@ public:
 	virtual bool VLoadResource(char *rawBuffer, unsigned int rawSize, shared_ptr<ResHandle> handle);
 	virtual std::string VGetPattern() { return "*.obj"; }
 
-	bool LoadModelUsingAssimp(const std::string& Filename, ModelType* outModel);
+	bool LoadModelUsingAssimp(const std::string& Filename, shared_ptr<ModelType> outModel);
 
 	int m_NumIndicesAssimp, m_NumFacesAssimp, m_NumVerteciesAssimp;
 };

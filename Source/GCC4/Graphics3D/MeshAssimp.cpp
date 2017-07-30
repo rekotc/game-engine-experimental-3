@@ -84,6 +84,7 @@ bool AssimpMeshResourceLoader::VLoadResource(char *rawBuffer, unsigned int rawSi
 			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
 		}*/
 
+
 		if (LoadModelUsingAssimp(handle->GetName(), extra->m_assimpMesh11)) {
 			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
 		}
@@ -666,7 +667,7 @@ float D3DShaderAssimpMeshNode11::CalcBoundingSphere(CDXUTSDKMesh *mesh11)
 }
 
 
-bool AssimpMeshResourceLoader::LoadModelUsingAssimp(const std::string& filename, ModelType* outModel)
+bool AssimpMeshResourceLoader::LoadModelUsingAssimp(const std::string& filename, shared_ptr<ModelType> outModel)
 {
 
 	std::string Filename = filename;
@@ -708,7 +709,7 @@ bool AssimpMeshResourceLoader::LoadModelUsingAssimp(const std::string& filename,
 	m_NumVerteciesAssimp = pMesh->mNumVertices;
 
 	// Create the model using the vertex count that was read in.
-	outModel = new ModelType[m_NumVerteciesAssimp];
+	outModel = shared_ptr<ModelType>(new ModelType[m_NumVerteciesAssimp]);
 
 	if (!outModel)
 	{
@@ -717,7 +718,8 @@ bool AssimpMeshResourceLoader::LoadModelUsingAssimp(const std::string& filename,
 
 	for (int i = 0; i < pMesh->mNumVertices; i++)
 	{
-		outModel[i].x = pMesh->mVertices[i].x;
+		outModel->x = pMesh->mVertices[i].x;
+		outModel.add
 		outModel[i].y = pMesh->mVertices[i].y;
 		outModel[i].z = pMesh->mVertices[i].z;
 		outModel[i].tu = pMesh->mTextureCoords[0][i].x;
@@ -725,6 +727,8 @@ bool AssimpMeshResourceLoader::LoadModelUsingAssimp(const std::string& filename,
 		outModel[i].nx = pMesh->mNormals[i].x;
 		outModel[i].ny = pMesh->mNormals[i].y;
 		outModel[i].nz = pMesh->mNormals[i].z;
+
+		outModel += sizeof(ModelType);
 	}
 
 	return true;

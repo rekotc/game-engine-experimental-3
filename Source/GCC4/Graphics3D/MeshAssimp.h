@@ -5,6 +5,7 @@
 #include "Geometry.h"
 #include "../ResourceCache/ResCache.h"
 #include "ModelType.h"
+#include "VertexType.h"
 
 #include <assimp/Importer.hpp>
 
@@ -12,7 +13,6 @@
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
 
 //
 // class D3DSdkMeshResourceExtraData11					- Chapter 16, page 561
@@ -54,12 +54,17 @@ class D3DAssimpMeshResourceExtraData11 : public IResourceExtraData
 	friend class SdkMeshResourceLoader;
 
 public:
-	D3DAssimpMeshResourceExtraData11() { m_assimpMesh11 = 0; };
+	D3DAssimpMeshResourceExtraData11() { m_NumIndicesAssimp = 0, m_NumFacesAssimp = 0, m_NumVerteciesAssimp = 0; };
 	virtual ~D3DAssimpMeshResourceExtraData11() { }
 	virtual std::string VToString() { return "D3DAssimpMeshResourceExtraData11"; }
 
 	CDXUTSDKMesh                m_Mesh11;
-	shared_ptr<ModelType> m_assimpMesh11;
+	//shared_ptr<ModelType> m_assimpMesh11;
+	std::vector<ModelType> m_assimpMesh11;
+	TextureClass* m_Texture;
+	int m_NumIndicesAssimp, m_NumFacesAssimp, m_NumVerteciesAssimp;
+	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
+
 };
 
 class AssimpMeshResourceLoader : public IResourceLoader
@@ -71,9 +76,10 @@ public:
 	virtual bool VLoadResource(char *rawBuffer, unsigned int rawSize, shared_ptr<ResHandle> handle);
 	virtual std::string VGetPattern() { return "*.obj"; }
 
-	bool LoadModelUsingAssimp(const std::string& Filename, shared_ptr<ModelType> outModel);
-
-	int m_NumIndicesAssimp, m_NumFacesAssimp, m_NumVerteciesAssimp;
+	std::shared_ptr<D3DAssimpMeshResourceExtraData11> LoadModelUsingAssimp(const std::string& Filename);
+	bool LoadTextureUsingAssimp(ID3D11Device*, const std::string& Filename);
+	
+	
 };
 
 //END ASSIMP
@@ -225,6 +231,9 @@ protected:
 	GameCode4_Hlsl_PixelShader		m_PixelShader;
 
 	float CalcBoundingSphere(CDXUTSDKMesh *mesh11);			// this was added post press.
+	float CalcBoundingSphere(std::vector<ModelType> m_assimpMesh11);
+	bool InitializeBuffers(ID3D11Device* device, std::shared_ptr<D3DAssimpMeshResourceExtraData11>*);
+	void RenderBuffers(ID3D11DeviceContext* deviceContext, std::shared_ptr<D3DAssimpMeshResourceExtraData11>*);
 	
 };
 

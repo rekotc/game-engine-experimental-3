@@ -31,7 +31,6 @@ m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_20
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\geometry.obj
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\lights.obj
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\material.obj
-m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\meshassimp.obj
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\modeltype.obj
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\movementcontroller.obj
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\raycast.obj
@@ -60,12 +59,7 @@ m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_20
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\logger.obj
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\minidump.obj
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\eventmanager.obj
-m:\github\visual-studio-2015\game-engine-experimental-3\source\lib\win32debug\gamecode4_2015.lib
 m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\msvc\..\..\lib\win32debug\gamecode4_2015.pdb
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\msvc\..\..\lib\win32debug\gamecode4_2015.lib
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\gamecode4_2015.tlog\cl.read.1.tlog
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\gamecode4_2015.tlog\cl.write.1.tlog
 m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\gamecode4_2015.tlog\cl.command.1.tlog
-m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\gamecode4_2015.tlog\lib-link.read.1.tlog
-m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\gamecode4_2015.tlog\lib-link.write.1.tlog
-m:\github\visual-studio-2015\game-engine-experimental-3\source\temp\gamecode4_2015win32debug\gamecode4_2015.tlog\lib.command.1.tlog

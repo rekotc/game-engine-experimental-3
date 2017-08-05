@@ -1,26 +1,3 @@
 ﻿  MeshAssimp.cpp
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(719): warning C4018: '<': signed/unsigned mismatch
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(721): error C2676: binary '[': 'std::shared_ptr<ModelType>' does not define this operator or a conversion to a type acceptable to the predefined operator
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(721): error C2228: left of '.x' must have class/struct/union
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(722): error C2676: binary '[': 'std::shared_ptr<ModelType>' does not define this operator or a conversion to a type acceptable to the predefined operator
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(722): error C2228: left of '.y' must have class/struct/union
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(723): error C2676: binary '[': 'std::shared_ptr<ModelType>' does not define this operator or a conversion to a type acceptable to the predefined operator
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(723): error C2228: left of '.z' must have class/struct/union
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(724): error C2676: binary '[': 'std::shared_ptr<ModelType>' does not define this operator or a conversion to a type acceptable to the predefined operator
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(724): error C2228: left of '.tu' must have class/struct/union
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(725): error C2676: binary '[': 'std::shared_ptr<ModelType>' does not define this operator or a conversion to a type acceptable to the predefined operator
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(725): error C2228: left of '.tv' must have class/struct/union
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(726): error C2676: binary '[': 'std::shared_ptr<ModelType>' does not define this operator or a conversion to a type acceptable to the predefined operator
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(726): error C2228: left of '.nx' must have class/struct/union
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(727): error C2676: binary '[': 'std::shared_ptr<ModelType>' does not define this operator or a conversion to a type acceptable to the predefined operator
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(727): error C2228: left of '.ny' must have class/struct/union
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(728): error C2676: binary '[': 'std::shared_ptr<ModelType>' does not define this operator or a conversion to a type acceptable to the predefined operator
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(728): error C2228: left of '.nz' must have class/struct/union
-  Generating Code...
-  Compiling...
-  RenderComponent.cpp
-  Generating Code...
-  Compiling...
-  Shaders.cpp
-  SceneNodes.cpp
-  Generating Code...
+m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(734): warning C4018: '<': signed/unsigned mismatch
+  GameCode4_2015.vcxproj -> M:\github\visual-studio-2015\game-engine-experimental-3\Source\GCC4\Msvc\..\..\Lib\Win32Debug\GameCode4_2015.lib

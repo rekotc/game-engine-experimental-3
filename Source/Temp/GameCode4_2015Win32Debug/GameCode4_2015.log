@@ -1,3 +1,3 @@
 ﻿  MeshAssimp.cpp
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(734): warning C4018: '<': signed/unsigned mismatch
+m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(746): warning C4018: '<': signed/unsigned mismatch
   GameCode4_2015.vcxproj -> M:\github\visual-studio-2015\game-engine-experimental-3\Source\GCC4\Msvc\..\..\Lib\Win32Debug\GameCode4_2015.lib

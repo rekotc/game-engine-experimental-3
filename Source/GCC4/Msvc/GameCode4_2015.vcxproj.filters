@@ -206,6 +206,9 @@
     <ClInclude Include="..\Graphics3D\VertexType.h">
       <Filter>Graphics3D</Filter>
     </ClInclude>
+    <ClInclude Include="..\Graphics3D\TextureClass.h">
+      <Filter>Graphics3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCodeStd.cpp" />
@@ -384,6 +387,9 @@
       <Filter>Graphics3D</Filter>
     </ClCompile>
     <ClCompile Include="..\Graphics3D\VertexType.cpp">
+      <Filter>Graphics3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics3D\TextureClass.cpp">
       <Filter>Graphics3D</Filter>
     </ClCompile>
   </ItemGroup>

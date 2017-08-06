@@ -244,6 +244,7 @@
     <ClInclude Include="..\Graphics3D\SceneNodes.h" />
     <ClInclude Include="..\Graphics3D\Shaders.h" />
     <ClInclude Include="..\Graphics3D\Sky.h" />
+    <ClInclude Include="..\Graphics3D\TextureClass.h" />
     <ClInclude Include="..\Graphics3D\VertexType.h" />
     <ClInclude Include="..\LUAScripting\LuaStateManager.h" />
     <ClInclude Include="..\LUAScripting\ScriptEvent.h" />
@@ -311,6 +312,7 @@
     <ClCompile Include="..\Graphics3D\SceneNodes.cpp" />
     <ClCompile Include="..\Graphics3D\Shaders.cpp" />
     <ClCompile Include="..\Graphics3D\Sky.cpp" />
+    <ClCompile Include="..\Graphics3D\TextureClass.cpp" />
     <ClCompile Include="..\Graphics3D\VertexType.cpp" />
     <ClCompile Include="..\LUAScripting\LuaStateManager.cpp" />
     <ClCompile Include="..\LUAScripting\ScriptEvent.cpp" />

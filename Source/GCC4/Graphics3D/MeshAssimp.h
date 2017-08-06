@@ -6,6 +6,7 @@
 #include "../ResourceCache/ResCache.h"
 #include "ModelType.h"
 #include "VertexType.h"
+#include "TextureClass.h"
 
 #include <assimp/Importer.hpp>
 
@@ -77,7 +78,7 @@ public:
 	virtual std::string VGetPattern() { return "*.obj"; }
 
 	std::shared_ptr<D3DAssimpMeshResourceExtraData11> LoadModelUsingAssimp(const std::string& Filename);
-	bool LoadTextureUsingAssimp(ID3D11Device*, const std::string& Filename);
+	bool LoadTextureUsingAssimp(ID3D11Device*, const std::string& Filename, std::shared_ptr<D3DAssimpMeshResourceExtraData11>* extra);
 	
 	
 };

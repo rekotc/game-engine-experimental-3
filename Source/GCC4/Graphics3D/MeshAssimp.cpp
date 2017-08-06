@@ -83,8 +83,11 @@ bool AssimpMeshResourceLoader::VLoadResource(char *rawBuffer, unsigned int rawSi
 		{
 			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
 		}*/
+		ID3D11Device* device = DXUTGetD3D11Device();
+		//ID3D11DeviceContext* deviceContext = DXUTGetD3D11DeviceContext();
 
 		shared_ptr<D3DAssimpMeshResourceExtraData11> extra = LoadModelUsingAssimp(handle->GetName());
+		LoadTextureUsingAssimp(device, "../Assets/Art/untitled.obj", &extra);
 
 		if (extra != NULL) {
 			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
@@ -624,20 +627,25 @@ HRESULT D3DShaderAssimpMeshNode11::VRender(Scene *pScene)
 
 
 	//D3D11_PRIMITIVE_TOPOLOGY PrimType;
-	for (UINT subset = 0; subset < extra->m_Mesh11.GetNumSubsets(0); ++subset)
-	{
-		// Get the subset
-		SDKMESH_SUBSET *pSubset = extra->m_Mesh11.GetSubset(0, subset);
+	//for (UINT subset = 0; subset < extra->m_Mesh11.GetNumSubsets(0); ++subset)
+	//{
+	//	// Get the subset
+	//	SDKMESH_SUBSET *pSubset = extra->m_Mesh11.GetSubset(0, subset);
 
 		// = CDXUTSDKMesh::GetPrimitiveType11((SDKMESH_PRIMITIVE_TYPE)pSubset->PrimitiveType);
 		//deviceContext->IASetPrimitiveTopology(PrimType);
 
 		//equivale forse a setShaderParameters()
-		ID3D11ShaderResourceView* pDiffuseRV = extra->m_Mesh11.GetMaterial(pSubset->MaterialID)->pDiffuseRV11;
-		deviceContext->PSSetShaderResources(0, 1, &pDiffuseRV);
+		//ID3D11ShaderResourceView* pDiffuseRV = extra->m_Mesh11.GetMaterial(pSubset->MaterialID)->pDiffuseRV11;
+		//deviceContext->PSSetShaderResources(0, 1, &pDiffuseRV);
+
+		// Set shader texture resource in the pixel shader.
+		ID3D11ShaderResourceView* texture = extra.get()->m_Texture->GetTexture();
+		deviceContext->PSSetShaderResources(0, 1, &texture);
+
 		//dovrebbe essere a posto.
 		deviceContext->DrawIndexed((UINT)extra->m_NumIndicesAssimp, 0, 0);
-	}
+	//}
 
 	return S_OK;
 }
@@ -861,14 +869,14 @@ void D3DShaderAssimpMeshNode11::RenderBuffers(ID3D11DeviceContext* deviceContext
 
 	return;
 }
-bool AssimpMeshResourceLoader::LoadTextureUsingAssimp(ID3D11Device* device, const std::string& Filename)
+bool AssimpMeshResourceLoader::LoadTextureUsingAssimp(ID3D11Device* device, const std::string& Filename , std::shared_ptr<D3DAssimpMeshResourceExtraData11>* extra)
 {
 	bool result;
 
 	Assimp::Importer Importer;
 	const aiScene *pScene = NULL;
 	const aiMesh *pMesh = NULL;
-
+	TextureClass* texture = NULL;
 	pScene = Importer.ReadFile(Filename.c_str(), aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_ValidateDataStructure | aiProcess_FindInvalidData);
 
 	if (!pScene)
@@ -882,15 +890,15 @@ bool AssimpMeshResourceLoader::LoadTextureUsingAssimp(ID3D11Device* device, cons
 		const aiMaterial* pMaterial = pScene->mMaterials[i];
 
 		//al momento ho una sola texture, altrimenti dovrei ciclare su m_Textures[i]
-		m_Texture = NULL;
+		//m_Texture = NULL;
 
 		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 
 			aiString Path;
 			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 				// Create the texture object.
-				m_Texture = new TextureClass;
-				if (!m_Texture)
+				texture = new TextureClass;
+				if (!texture)
 				{
 					return false;
 				}
@@ -901,13 +909,15 @@ bool AssimpMeshResourceLoader::LoadTextureUsingAssimp(ID3D11Device* device, cons
 				std::wstring text_wchar(length, L'#');
 				mbstowcs(&text_wchar[0], text_char, length);
 
-				std::wstring folder = L"../Engine/data/";
+				std::wstring folder = L"../Assets/Art/";
 				folder += text_wchar;
-				result = m_Texture->Initialize(device, folder.data());
+				result = texture->Initialize(device, folder.data());
 				if (!result)
 				{
 					return false;
 				}
+				else
+					extra->get()[0].m_Texture = texture;
 
 			}
 		}

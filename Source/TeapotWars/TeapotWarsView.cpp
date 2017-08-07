@@ -739,7 +739,7 @@ AITeapotView::AITeapotView(shared_ptr<PathingGraph> pPathingGraph) : IGameView()
     //
 }
 
-//commento inutile per il commit
+//
 // AITeapotView::~AITeapotView					- Chapter 19, page 737
 //
 AITeapotView::~AITeapotView(void)

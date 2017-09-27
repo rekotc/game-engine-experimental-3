@@ -52,6 +52,60 @@ bool SdkMeshResourceLoader::VLoadResource(char *rawBuffer, unsigned int rawSize,
 	return false;
 }
 
+//ASSIMP RESOURCE LOADER 
+shared_ptr<IResourceLoader> CreateAssimpMeshResourceLoader()
+{
+	return shared_ptr<IResourceLoader>(GCC_NEW AssimpMeshResourceLoader());
+}
+
+unsigned int AssimpMeshResourceLoader::VGetLoadedResourceSize(char *rawBuffer, unsigned int rawSize)
+{
+	// The raw data of the SDK Mesh file is needed by the CDXUTMesh class, so we're going to keep it around.
+	return rawSize;
+}
+
+//
+// SdkMeshResourceLoader::VLoadResource						- Chapter 16, page 561
+//
+bool AssimpMeshResourceLoader::VLoadResource(char *rawBuffer, unsigned int rawSize, shared_ptr<ResHandle> handle)
+{
+	GameCodeApp::Renderer renderer = GameCodeApp::GetRendererImpl();
+	if (renderer == GameCodeApp::Renderer_D3D9)
+	{
+		GCC_ASSERT(0 && "This is not supported in D3D9");
+	}
+	else if (renderer == GameCodeApp::Renderer_D3D11)
+	{
+		//shared_ptr<D3DAssimpMeshResourceExtraData11> extra = shared_ptr<D3DAssimpMeshResourceExtraData11>(GCC_NEW D3DAssimpMeshResourceExtraData11());
+
+		// Load the Mesh
+	/*	if (SUCCEEDED(extra->m_Mesh11.Create(DXUTGetD3D11Device(), (BYTE *)rawBuffer, (UINT)rawSize, true)))
+		{
+			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
+		}*/
+		ID3D11Device* device = DXUTGetD3D11Device();
+		//ID3D11DeviceContext* deviceContext = DXUTGetD3D11DeviceContext();
+
+		shared_ptr<D3DAssimpMeshResourceExtraData11> extra = LoadModelUsingAssimp(handle->GetName());
+		LoadTextureUsingAssimp(device, "../Assets/Art/untitled.obj", &extra);
+
+		if (extra != NULL) {
+			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
+		}
+		else
+			GCC_ASSERT(0 && "Errore nel caricamento della mesh!");
+
+		//extra->m_assimpMesh11 
+
+		
+
+		return true;
+	}
+
+	GCC_ASSERT(0 && "Unsupported Renderer in AssimpMeshResourceLoader::VLoadResource");
+	return false;
+}
+
 
 
 
@@ -524,9 +578,9 @@ HRESULT D3DShaderAssimpMeshNode11::VOnRestore(Scene *pScene)
 	// Force the Mesh to reload
 	Resource resource(m_sdkMeshFileName);
 	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
-	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+	shared_ptr<D3DAssimpMeshResourceExtraData11> extra = static_pointer_cast<D3DAssimpMeshResourceExtraData11>(pResourceHandle->GetExtra());
 
-	SetRadius(CalcBoundingSphere(&extra->m_Mesh11));
+	SetRadius(CalcBoundingSphere(extra->m_assimpMesh11));
 
 	return S_OK;
 }
@@ -538,44 +592,61 @@ HRESULT D3DShaderAssimpMeshNode11::VRender(Scene *pScene)
 {
 	HRESULT hr;
 
+	ID3D11Device* device = DXUTGetD3D11Device();
 	ID3D11DeviceContext* deviceContext = DXUTGetD3D11DeviceContext();
 
+
+	//setup degli shader TODO
 	V_RETURN(m_VertexShader.SetupRender(pScene, this));
 	V_RETURN(m_PixelShader.SetupRender(pScene, this));
 
 	//Get the Mesh
 	Resource resource(m_sdkMeshFileName);
 	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
-	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+	shared_ptr<D3DAssimpMeshResourceExtraData11> extra = static_pointer_cast<D3DAssimpMeshResourceExtraData11>(pResourceHandle->GetExtra());
 
 	// FUTURE WORK - this code WON'T be able to find texture resources referred to by the sdkmesh file 
 	// in the Resource cache.
 
 	//IA setup
-	UINT Strides[1];
-	UINT Offsets[1];
-	ID3D11Buffer* pVB[1];
-	pVB[0] = extra->m_Mesh11.GetVB11(0, 0);
-	Strides[0] = (UINT)extra->m_Mesh11.GetVertexStride(0, 0);
-	Offsets[0] = 0;
-	deviceContext->IASetVertexBuffers(0, 1, pVB, Strides, Offsets);
-	deviceContext->IASetIndexBuffer(extra->m_Mesh11.GetIB11(0), extra->m_Mesh11.GetIBFormat11(0), 0);
+	//forse va spostata in VOnRestore
+	InitializeBuffers(device,&extra);
+
+	//UINT Strides[1];
+	//UINT Offsets[1];
+	//ID3D11Buffer* pVB[1];
+	//pVB[0] = extra->m_Mesh11.GetVB11(0, 0);
+	//Strides[0] = (UINT)extra->m_Mesh11.GetVertexStride(0, 0);
+	//Offsets[0] = 0;
+	//deviceContext->IASetVertexBuffers(0, 1, pVB, Strides, Offsets);
+	//deviceContext->IASetIndexBuffer(extra->m_Mesh11.GetIB11(0), extra->m_Mesh11.GetIBFormat11(0), 0);
 
 	//Render
-	D3D11_PRIMITIVE_TOPOLOGY PrimType;
-	for (UINT subset = 0; subset < extra->m_Mesh11.GetNumSubsets(0); ++subset)
-	{
-		// Get the subset
-		SDKMESH_SUBSET *pSubset = extra->m_Mesh11.GetSubset(0, subset);
+	RenderBuffers(deviceContext,&extra);
 
-		PrimType = CDXUTSDKMesh::GetPrimitiveType11((SDKMESH_PRIMITIVE_TYPE)pSubset->PrimitiveType);
-		deviceContext->IASetPrimitiveTopology(PrimType);
 
-		ID3D11ShaderResourceView* pDiffuseRV = extra->m_Mesh11.GetMaterial(pSubset->MaterialID)->pDiffuseRV11;
-		deviceContext->PSSetShaderResources(0, 1, &pDiffuseRV);
 
-		deviceContext->DrawIndexed((UINT)pSubset->IndexCount, 0, (UINT)pSubset->VertexStart);
-	}
+	//D3D11_PRIMITIVE_TOPOLOGY PrimType;
+	//for (UINT subset = 0; subset < extra->m_Mesh11.GetNumSubsets(0); ++subset)
+	//{
+	//	// Get the subset
+	//	SDKMESH_SUBSET *pSubset = extra->m_Mesh11.GetSubset(0, subset);
+
+		// = CDXUTSDKMesh::GetPrimitiveType11((SDKMESH_PRIMITIVE_TYPE)pSubset->PrimitiveType);
+		//deviceContext->IASetPrimitiveTopology(PrimType);
+
+		//equivale forse a setShaderParameters()
+		//ID3D11ShaderResourceView* pDiffuseRV = extra->m_Mesh11.GetMaterial(pSubset->MaterialID)->pDiffuseRV11;
+		//deviceContext->PSSetShaderResources(0, 1, &pDiffuseRV);
+
+		// Set shader texture resource in the pixel shader.
+		ID3D11ShaderResourceView* texture = extra.get()->m_Texture->GetTexture();
+		deviceContext->PSSetShaderResources(0, 1, &texture);
+
+		//dovrebbe essere a posto.
+		deviceContext->DrawIndexed((UINT)extra->m_NumIndicesAssimp, 0, 0);
+	//}
+
 	return S_OK;
 }
 
@@ -589,7 +660,7 @@ HRESULT D3DShaderAssimpMeshNode11::VPick(Scene *pScene, RayCast *pRayCast)
 	//Get the Mesh
 	Resource resource(m_sdkMeshFileName);
 	shared_ptr<ResHandle> pResourceHandle = g_pApp->m_ResCache->GetHandle(&resource);
-	shared_ptr<D3DSdkMeshResourceExtraData11> extra = static_pointer_cast<D3DSdkMeshResourceExtraData11>(pResourceHandle->GetExtra());
+	shared_ptr<D3DAssimpMeshResourceExtraData11> extra = static_pointer_cast<D3DAssimpMeshResourceExtraData11>(pResourceHandle->GetExtra());
 
 	HRESULT hr = pRayCast->Pick(pScene, m_Props.ActorId(), &extra->m_Mesh11);
 	pScene->PopMatrix();
@@ -600,10 +671,10 @@ HRESULT D3DShaderAssimpMeshNode11::VPick(Scene *pScene, RayCast *pRayCast)
 
 
 
-float D3DShaderAssimpMeshNode11::CalcBoundingSphere(CDXUTSDKMesh *mesh11)
+float D3DShaderAssimpMeshNode11::CalcBoundingSphere(std::vector<ModelType> m_assimpMesh11)
 {
 	float radius = 0.0f;
-	for (UINT subset = 0; subset < mesh11->GetNumSubsets(0); ++subset)
+	/*for (UINT subset = 0; subset < mesh11->GetNumSubsets(0); ++subset)
 	{
 		Vec3 extents = mesh11->GetMeshBBoxExtents(subset);
 		extents.x = abs(extents.x);
@@ -612,6 +683,245 @@ float D3DShaderAssimpMeshNode11::CalcBoundingSphere(CDXUTSDKMesh *mesh11)
 		radius = (radius > extents.x) ? radius : extents.x;
 		radius = (radius > extents.y) ? radius : extents.y;
 		radius = (radius > extents.z) ? radius : extents.z;
-	}
+	}*/
 	return radius;
+}
+
+
+std::shared_ptr<D3DAssimpMeshResourceExtraData11> AssimpMeshResourceLoader::LoadModelUsingAssimp(const std::string& filename)
+{
+	
+	std::string Filename = filename;
+	Filename = "M:\\github\\visual-studio-2015\\game-engine-experimental-3\\Assets\\Art\\untitled.obj";
+	Assimp::Importer Importer;
+	const aiScene *pScene = NULL;
+	const aiMesh *pMesh = NULL;
+
+	std::shared_ptr<D3DAssimpMeshResourceExtraData11> extra(new D3DAssimpMeshResourceExtraData11());
+
+	pScene = Importer.ReadFile(Filename.c_str(), aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_ValidateDataStructure | aiProcess_FindInvalidData);
+
+	if (!pScene)
+	{
+		printf("Error parsing '%s': '%s'\n", Filename.c_str(), Importer.GetErrorString());
+		return false;
+	}
+
+	pMesh = pScene->mMeshes[0];
+	if (!pMesh)
+	{
+		printf("Error Finding Model In file.  Did you export an empty scene?");
+		return false;
+	}
+
+	for (unsigned int i = 0; i < pMesh->mNumFaces; i++)
+	{
+		if (pMesh->mFaces[i].mNumIndices == 3)
+		{
+			extra.get()[0].m_NumIndicesAssimp = extra.get()[0].m_NumIndicesAssimp + 3;
+		}
+
+		else
+		{
+			printf("Error parsing Faces. Try to Re-Export model from 3d package!");
+			return false;
+		}
+	}
+
+	extra.get()[0].m_NumFacesAssimp = pMesh->mNumFaces;
+	extra.get()[0].m_NumVerteciesAssimp = pMesh->mNumVertices;
+	
+	// Create the model using the vertex count that was read in.
+	//std::unique_ptr<ModelType[]> arr(new ModelType[extra.get()[0].m_NumVerteciesAssimp]);
+	//std::shared_ptr<ModelType> outputModel(std::move(arr));
+
+	//int numVertex = pMesh->mNumVertices;
+	std::vector<ModelType> outputModel(pMesh->mNumVertices);
+
+	/*if (!outputModel)
+	{
+		return false;
+	}*/
+
+	for (int i = 0; i < pMesh->mNumVertices; i++){
+
+		outputModel[i].x = pMesh->mVertices[i].x;
+		outputModel[i].y = pMesh->mVertices[i].y;
+		outputModel[i].z = pMesh->mVertices[i].z;
+		outputModel[i].tu = pMesh->mTextureCoords[0][i].x;
+		outputModel[i].tv = pMesh->mTextureCoords[0][i].y;
+		outputModel[i].nx = pMesh->mNormals[i].x;
+		outputModel[i].ny = pMesh->mNormals[i].y;
+		outputModel[i].nz = pMesh->mNormals[i].z;
+
+		//outModel += sizeof(ModelType);
+	}
+
+	//outModel = &out;
+	extra.get()[0].m_assimpMesh11 = outputModel;
+	return extra;
+}
+
+bool D3DShaderAssimpMeshNode11::InitializeBuffers(ID3D11Device* device, std::shared_ptr<D3DAssimpMeshResourceExtraData11>* extra) {
+
+	VertexType* vertices;
+	unsigned long* indices;
+	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
+	D3D11_SUBRESOURCE_DATA vertexData, indexData;
+	HRESULT result;
+	int i;
+
+
+	// Create the vertex array.
+	vertices = new VertexType[extra->get()[0].m_NumVerteciesAssimp];
+	if (!vertices)
+	{
+		return false;
+	}
+
+	// Create the index array.
+	indices = new unsigned long[extra->get()[0].m_NumIndicesAssimp];
+	if (!indices)
+	{
+		return false;
+	}
+
+
+
+	// Load the vertex array and index array with data.
+	for (i = 0; i<extra->get()[0].m_NumVerteciesAssimp; i++)
+	{
+		vertices[i].position = D3DXVECTOR3(extra->get()[0].m_assimpMesh11.at(i).x, extra->get()[0].m_assimpMesh11.at(i).y, extra->get()[0].m_assimpMesh11.at(i).z);
+		vertices[i].texture = D3DXVECTOR2(extra->get()[0].m_assimpMesh11.at(i).tu, extra->get()[0].m_assimpMesh11.at(i).tv);
+		vertices[i].normal = D3DXVECTOR3(extra->get()[0].m_assimpMesh11.at(i).nx, extra->get()[0].m_assimpMesh11.at(i).ny, extra->get()[0].m_assimpMesh11.at(i).nz);
+
+		indices[i] = i;
+	}
+
+	// Set up the description of the static vertex buffer.
+	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	vertexBufferDesc.ByteWidth = sizeof(VertexType) * extra->get()[0].m_NumVerteciesAssimp;
+	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
+	vertexBufferDesc.StructureByteStride = 0;
+
+	// Give the subresource structure a pointer to the vertex data.
+	vertexData.pSysMem = vertices;
+	vertexData.SysMemPitch = 0;
+	vertexData.SysMemSlicePitch = 0;
+
+	// Now create the vertex buffer.
+	result = device->CreateBuffer(&vertexBufferDesc, &vertexData, &extra->get()[0].m_vertexBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Set up the description of the static index buffer.
+	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	indexBufferDesc.ByteWidth = sizeof(unsigned long) * extra->get()[0].m_NumIndicesAssimp;
+	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	indexBufferDesc.CPUAccessFlags = 0;
+	indexBufferDesc.MiscFlags = 0;
+	indexBufferDesc.StructureByteStride = 0;
+
+	// Give the subresource structure a pointer to the index data.
+	indexData.pSysMem = indices;
+	indexData.SysMemPitch = 0;
+	indexData.SysMemSlicePitch = 0;
+
+	// Create the index buffer.
+	result = device->CreateBuffer(&indexBufferDesc, &indexData, &extra->get()[0].m_indexBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Release the arrays now that the vertex and index buffers have been created and loaded.
+	delete[] vertices;
+	vertices = 0;
+
+	delete[] indices;
+	indices = 0;
+
+	return true;
+}
+
+void D3DShaderAssimpMeshNode11::RenderBuffers(ID3D11DeviceContext* deviceContext, std::shared_ptr<D3DAssimpMeshResourceExtraData11>* extra)
+{
+	unsigned int stride;
+	unsigned int offset;
+
+
+	// Set vertex buffer stride and offset.
+	stride = sizeof(VertexType);
+	offset = 0;
+
+	// Set the vertex buffer to active in the input assembler so it can be rendered.
+	deviceContext->IASetVertexBuffers(0, 1, &extra->get()[0].m_vertexBuffer, &stride, &offset);
+
+	// Set the index buffer to active in the input assembler so it can be rendered.
+	deviceContext->IASetIndexBuffer(extra->get()[0].m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
+	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	return;
+}
+bool AssimpMeshResourceLoader::LoadTextureUsingAssimp(ID3D11Device* device, const std::string& Filename , std::shared_ptr<D3DAssimpMeshResourceExtraData11>* extra)
+{
+	bool result;
+
+	Assimp::Importer Importer;
+	const aiScene *pScene = NULL;
+	const aiMesh *pMesh = NULL;
+	TextureClass* texture = NULL;
+	pScene = Importer.ReadFile(Filename.c_str(), aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_ValidateDataStructure | aiProcess_FindInvalidData);
+
+	if (!pScene)
+	{
+		printf("Error parsing '%s': '%s'\n", Filename.c_str(), Importer.GetErrorString());
+		return false;
+	}
+
+
+	for (unsigned int i = 0; i < pScene->mNumMaterials; i++) {
+		const aiMaterial* pMaterial = pScene->mMaterials[i];
+
+		//al momento ho una sola texture, altrimenti dovrei ciclare su m_Textures[i]
+		//m_Texture = NULL;
+
+		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+
+			aiString Path;
+			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+				// Create the texture object.
+				texture = new TextureClass;
+				if (!texture)
+				{
+					return false;
+				}
+				// Initialize the texture object.
+
+				const char* text_char = Path.C_Str();
+				size_t length = strlen(text_char);
+				std::wstring text_wchar(length, L'#');
+				mbstowcs(&text_wchar[0], text_char, length);
+
+				std::wstring folder = L"../Assets/Art/";
+				folder += text_wchar;
+				result = texture->Initialize(device, folder.data());
+				if (!result)
+				{
+					return false;
+				}
+				else
+					extra->get()[0].m_Texture = texture;
+
+			}
+		}
+	}
+
+	return true;
 }

@@ -1,3 +1,6 @@
+A slightly modified version of the original source code...
+
+
 Welcome to the Game Coding Complete 4th Edition Source Code!
 
 Introduction

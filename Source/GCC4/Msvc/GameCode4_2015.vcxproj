@@ -237,12 +237,15 @@
     <ClInclude Include="..\Graphics3D\Lights.h" />
     <ClInclude Include="..\Graphics3D\Material.h" />
     <ClInclude Include="..\Graphics3D\MeshAssimp.h" />
+    <ClInclude Include="..\Graphics3D\ModelType.h" />
     <ClInclude Include="..\Graphics3D\MovementController.h" />
     <ClInclude Include="..\Graphics3D\Raycast.h" />
     <ClInclude Include="..\Graphics3D\Scene.h" />
     <ClInclude Include="..\Graphics3D\SceneNodes.h" />
     <ClInclude Include="..\Graphics3D\Shaders.h" />
     <ClInclude Include="..\Graphics3D\Sky.h" />
+    <ClInclude Include="..\Graphics3D\TextureClass.h" />
+    <ClInclude Include="..\Graphics3D\VertexType.h" />
     <ClInclude Include="..\LUAScripting\LuaStateManager.h" />
     <ClInclude Include="..\LUAScripting\ScriptEvent.h" />
     <ClInclude Include="..\LUAScripting\ScriptExports.h" />
@@ -302,12 +305,15 @@
     <ClCompile Include="..\Graphics3D\Lights.cpp" />
     <ClCompile Include="..\Graphics3D\Material.cpp" />
     <ClCompile Include="..\Graphics3D\MeshAssimp.cpp" />
+    <ClCompile Include="..\Graphics3D\ModelType.cpp" />
     <ClCompile Include="..\Graphics3D\MovementController.cpp" />
     <ClCompile Include="..\Graphics3D\Raycast.cpp" />
     <ClCompile Include="..\Graphics3D\Scene.cpp" />
     <ClCompile Include="..\Graphics3D\SceneNodes.cpp" />
     <ClCompile Include="..\Graphics3D\Shaders.cpp" />
     <ClCompile Include="..\Graphics3D\Sky.cpp" />
+    <ClCompile Include="..\Graphics3D\TextureClass.cpp" />
+    <ClCompile Include="..\Graphics3D\VertexType.cpp" />
     <ClCompile Include="..\LUAScripting\LuaStateManager.cpp" />
     <ClCompile Include="..\LUAScripting\ScriptEvent.cpp" />
     <ClCompile Include="..\LUAScripting\ScriptExports.cpp" />
@@ -341,6 +347,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">GameCodeStd.h</PrecompiledHeaderFile>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

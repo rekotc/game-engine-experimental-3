@@ -200,6 +200,15 @@
     <ClInclude Include="..\Graphics3D\MeshAssimp.h">
       <Filter>Graphics3D</Filter>
     </ClInclude>
+    <ClInclude Include="..\Graphics3D\ModelType.h">
+      <Filter>Graphics3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics3D\VertexType.h">
+      <Filter>Graphics3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics3D\TextureClass.h">
+      <Filter>Graphics3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCodeStd.cpp" />
@@ -374,6 +383,15 @@
     <ClCompile Include="..\Graphics3D\MeshAssimp.cpp">
       <Filter>Graphics3D</Filter>
     </ClCompile>
+    <ClCompile Include="..\Graphics3D\ModelType.cpp">
+      <Filter>Graphics3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics3D\VertexType.cpp">
+      <Filter>Graphics3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics3D\TextureClass.cpp">
+      <Filter>Graphics3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameCode4">
@@ -427,5 +445,8 @@
     <Filter Include="LUAScripting">
       <UniqueIdentifier>{5b29ab53-9ab7-44a7-8577-3ed619fe1d3f}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

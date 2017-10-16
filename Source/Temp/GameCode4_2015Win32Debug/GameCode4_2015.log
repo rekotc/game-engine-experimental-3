@@ -1,3 +1,5 @@
 ﻿  MeshAssimp.cpp
-m:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(746): warning C4018: '<': signed/unsigned mismatch
-  GameCode4_2015.vcxproj -> M:\github\visual-studio-2015\game-engine-experimental-3\Source\GCC4\Msvc\..\..\Lib\Win32Debug\GameCode4_2015.lib
+d:\github\visual-studio-2015\game-engine-experimental-3\source\gcc4\graphics3d\meshassimp.cpp(755): warning C4018: '<': errata corrispondenza tra signed e unsigned
+MeshAssimp.obj : warning LNK4006: "public: enum aiReturn __thiscall aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QBE?AW4aiReturn@@W4aiTextureType@@IPAUaiString@@PAW4aiTextureMapping@@PAIPAMPAW4aiTextureOp@@PAW4aiTextureMapMode@@@Z) giÓ definito in assimp.lib(assimp-vc140-mt.dll); seconda definizione ignorata
+MeshAssimp.obj : warning LNK4006: "public: unsigned int __thiscall aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QBEIW4aiTextureType@@@Z) giÓ definito in assimp.lib(assimp-vc140-mt.dll); seconda definizione ignorata
+  GameCode4_2015.vcxproj -> D:\github\visual-studio-2015\game-engine-experimental-3\Source\GCC4\Msvc\..\..\Lib\Win32Debug\GameCode4_2015.lib

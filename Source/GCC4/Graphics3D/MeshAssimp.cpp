@@ -87,7 +87,12 @@ bool AssimpMeshResourceLoader::VLoadResource(char *rawBuffer, unsigned int rawSi
 		//ID3D11DeviceContext* deviceContext = DXUTGetD3D11DeviceContext();
 
 		shared_ptr<D3DAssimpMeshResourceExtraData11> extra = LoadModelUsingAssimp(handle->GetName());
+
+		if (extra != NULL) {
 		LoadTextureUsingAssimp(device, "../Assets/Art/untitled.obj", &extra);
+		}
+		else
+			GCC_ASSERT(0 && "Errore nel caricamento della mesh!");
 
 		if (extra != NULL) {
 			handle->SetExtra(shared_ptr<D3DAssimpMeshResourceExtraData11>(extra));
@@ -692,7 +697,11 @@ std::shared_ptr<D3DAssimpMeshResourceExtraData11> AssimpMeshResourceLoader::Load
 {
 	
 	std::string Filename = filename;
-	Filename = "M:\\github\\visual-studio-2015\\game-engine-experimental-3\\Assets\\Art\\untitled.obj";
+	Filename = "..\\Assets\\" + Filename;
+	//Filename = "M:\\github\\visual-studio-2015\\game-engine-experimental-3\\Assets\\Art\\untitled.obj";
+	//Filename = "D:\\github\\visual-studio-2015\\game-engine-experimental-3\\Assets\\Art\\untitled.obj";
+
+
 	Assimp::Importer Importer;
 	const aiScene *pScene = NULL;
 	const aiMesh *pMesh = NULL;
